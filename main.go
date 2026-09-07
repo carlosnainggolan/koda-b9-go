@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(gabungan(8,5))
+	a, k := gabungan(8,5)
+	fmt.Printf("Luas: %d\n", a)
+	fmt.Printf("Keliling: %d\n", k)
 }
 
 // func greet (name string) {
