@@ -3,8 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(area(8,5))
-	fmt.Println(keliling(8,5))
 	fmt.Println(gabungan(8,5))
 }
 
@@ -24,18 +22,16 @@ func main() {
 // 	return resultAdd, resultSub
 // }
 
-func area (p uint8, l uint8) (a uint8) {
-	a = p*l
-	return a
+func area (p uint8, l uint8) uint8 {
+	return p * l
 }
 
-func keliling (p uint8, l uint8) (k uint8) {
-	k = 2*(p+l)
-	return k
+func keliling (p uint8, l uint8) uint8 {
+	return 2 * (p + l)
 }
 
 func gabungan (p uint8, l uint8) (a uint8, k uint8) {
-	a = p*l
-	k = 2*(p+l)
+	a = area(p, l)
+	k = keliling(p, l)
 	return a, k
 }
