@@ -24,17 +24,17 @@ func main() {
 // 	return resultAdd, resultSub
 // }
 
-func area (p int8, l int8) (a int8) {
+func area (p uint8, l uint8) (a uint8) {
 	a = p*l
 	return a
 }
 
-func keliling (p int8, l int8) (k int8) {
+func keliling (p uint8, l uint8) (k uint8) {
 	k = 2*(p+l)
 	return k
 }
 
-func gabungan (p int8, l int8) (a int8, k int8) {
+func gabungan (p uint8, l uint8) (a uint8, k uint8) {
 	a = p*l
 	k = 2*(p+l)
 	return a, k
