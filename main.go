@@ -15,6 +15,27 @@ func main() {
 	} 
 
 	slice(88)
+
+	myBiodata := Biodata {
+		Nama: "Carlos",
+		Foto: "Img",
+		Email: "carlosnainggolan@gmail.com",
+		Umur: 25,
+		NomorTelepon: "088294649371",
+		StatusPernikahan: true,
+		RiwayatPendidikan: []Pendidikan{
+			{
+				Nama: "UPN Veteran Yogyakarta",
+				Jurusan: "Sistem Informasi",
+			},
+			{
+				Nama: "SMA RK Budi Mulia",
+				Jurusan: "Saintek",
+			},
+		},
+	}
+
+	fmt.Println(myBiodata)
 }
 
 // func greet (name string) {
@@ -64,7 +85,6 @@ func window (n int) error {
 	return nil
 }
 
-//menyisipkan angka setleah 66
 func slice (num int8) {
 	a := []int{50, 75, 66, 20, 32, 90}
 	for i, v := range a {
@@ -76,4 +96,19 @@ func slice (num int8) {
 	for _, v := range a {
 		fmt.Println(v)
 	}
+}
+
+type Biodata struct {
+	Nama string
+	Foto string
+	Email string
+	Umur uint8
+	NomorTelepon string
+	StatusPernikahan bool
+	RiwayatPendidikan []Pendidikan
+}
+
+type Pendidikan struct {
+	Nama string
+	Jurusan string
 }
