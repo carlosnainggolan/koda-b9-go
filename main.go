@@ -2,18 +2,23 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	// "fmt"
+
 	"os"
 	"strconv"
 	"strings"
+	// "fmt"
+
+	"fmt"
 
 	"github.com/carlosnainggolan/koda-b9-git/internal/model"
+	"github.com/carlosnainggolan/koda-b9-git/internal/sales"
 	"github.com/carlosnainggolan/koda-b9-git/internal/service"
 )
 
 func main() {
 	// Minitask 1
-	// area, keliling := gabungan(8,5)
+	// area, keliling := Gabungan(8,5)
 	// fmt.Printf("Luas: %d\n", area)
 	// fmt.Printf("Keliling: %d\n", keliling)
 
@@ -26,8 +31,11 @@ func main() {
 		fmt.Println("2. Membentuk jendela")
 		fmt.Println("3. Inject to Slice")
 		fmt.Println("4. Lihat Biodata")
+		fmt.Println("5. Open File Path")
+		fmt.Println("6. Setter Getter")
+		fmt.Println("7. Payment")
 		fmt.Println("0. Keluar")
-		fmt.Print("Pilih menu (0-4): ")
+		fmt.Print("Pilih menu (0-5): ")
 
 		if !scanner.Scan() {
 			break
@@ -83,6 +91,35 @@ func main() {
 			}
 			fmt.Println(myBiodata)
 
+		case "5":
+			fmt.Print("Masukkan file path")
+			scanner.Scan()
+			f := strings.TrimSpace(scanner.Text())
+			err := service.ReadingFile(f)
+			if err != nil {
+				fmt.Println("Terjadi Error", err)
+			}
+
+		case "6":
+			personData := model.Constructor("Carlos", "Jakarta", "088294649371")
+			fmt.Println(personData.PrintData())
+			fmt.Println(personData.Greet())
+			personData.Setter("Rahel")
+			fmt.Println(personData.Greet())
+			personData.Setter("Dodi")
+			fmt.Println(personData.Greet())
+
+		case "7":
+			list := []int{1000, 2000, 3000, 4000}
+			bank := sales.Bank{}
+			online := sales.Online{}
+			fiktif := sales.Fictional{}
+
+			fmt.Println(sales.Result(bank, list))
+			fmt.Println(sales.Result(online, list))
+			fmt.Println(sales.Result(fiktif, list))
+			
+
 		case "0":
 			fmt.Println("Keluar dari program.")
 			return
@@ -93,28 +130,7 @@ func main() {
 	}
 }
 
-	// err := window(21)
-	// if err != nil {
-	// 	fmt.Println("Error:", err.Error())
-	// } 
-
-	// slice(88)
-
-// func greet (name string) {
-// 	fmt.Printf("Hello %s", name)
-// }
-
-// func prinTwoDecimalsFloat (num float32) string {
-// 	result :=	fmt.Sprintf("\nHasil: %.2f\n", num)
-// 	return result
-// }
-
-// //return 2
-// func addAndSub (a int8, b int8)(resultAdd int16, resultSub int8) {
-// 	resultAdd = int16(a) + int16(b)
-// 	resultSub = a- b
-// 	return resultAdd, resultSub
-// }
+	
 
 
 
