@@ -1,6 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+
+	"github.com/carlosnainggolan/koda-b9-git/internal/model"
+	"github.com/carlosnainggolan/koda-b9-git/internal/service"
+)
 
 func main() {
 	// Minitask 1
@@ -9,34 +18,87 @@ func main() {
 	// fmt.Printf("Keliling: %d\n", keliling)
 
 	// Minitask 2
-	err := window(21)
-	if err != nil {
-		fmt.Println("Error:", err.Error())
-	} 
 
-	slice(88)
+	scanner := bufio.NewScanner(os.Stdin)
 
-	myBiodata := Biodata {
-		Nama: "Carlos",
-		Foto: "Img",
-		Email: "carlosnainggolan@gmail.com",
-		Umur: 25,
-		NomorTelepon: "088294649371",
-		StatusPernikahan: true,
-		RiwayatPendidikan: []Pendidikan{
-			{
-				Nama: "UPN Veteran Yogyakarta",
-				Jurusan: "Sistem Informasi",
-			},
-			{
-				Nama: "SMA RK Budi Mulia",
-				Jurusan: "Saintek",
-			},
-		},
+	for {
+		fmt.Println("1. Hitung persegi panjang")
+		fmt.Println("2. Membentuk jendela")
+		fmt.Println("3. Inject to Slice")
+		fmt.Println("4. Lihat Biodata")
+		fmt.Println("0. Keluar")
+		fmt.Print("Pilih menu (0-4): ")
+
+		if !scanner.Scan() {
+			break
 	}
+	choice := strings.TrimSpace(scanner.Text())
 
-	fmt.Println(myBiodata)
+	switch choice {
+		case "1":
+			fmt.Print("Masukkan lebar")
+			scanner.Scan()
+			l, _ := strconv.Atoi(scanner.Text()) 
+
+			fmt.Print("Masukkan panjang")
+			scanner.Scan()
+			p, _ := strconv.Atoi(scanner.Text()) 
+
+			luas, keliling := service.Gabungan(uint8(p), uint8(l))
+			fmt.Printf("Luas: %d\n Keliling: %d", luas, keliling)
+		
+		case "2":
+			fmt.Print("Masukkan ukuran jendela")
+			scanner.Scan()
+			p,_ := strconv.Atoi(scanner.Text())
+
+			err := service.Window(p)
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+
+		case "3":
+			fmt.Print("Insert angka ke slice")
+			service.Slice()
+
+
+		case "4":
+			myBiodata := model.Biodata {
+				Nama: "Carlos",
+				Foto: "Img",
+				Email: "carlosnainggolan@gmail.com",
+				Umur: 25,
+				NomorTelepon: "088294649371",
+				StatusPernikahan: true,
+				RiwayatPendidikan: []model.Pendidikan{
+					{
+						Nama: "UPN Veteran Yogyakarta",
+						Jurusan: "Sistem Informasi",
+					},
+					{
+						Nama: "SMA RK Budi Mulia",
+						Jurusan: "Saintek",
+					},
+				},
+			}
+			fmt.Println(myBiodata)
+
+		case "0":
+			fmt.Println("Keluar dari program.")
+			return
+
+		default:
+			fmt.Println("Menu tidak valid, silakan pilih lagi.")
+		}
+	}
 }
+
+	// err := window(21)
+	// if err != nil {
+	// 	fmt.Println("Error:", err.Error())
+	// } 
+
+	// slice(88)
 
 // func greet (name string) {
 // 	fmt.Printf("Hello %s", name)
@@ -54,61 +116,6 @@ func main() {
 // 	return resultAdd, resultSub
 // }
 
-// func area (p uint8, l uint8) uint8 {
-// 	return p * l
-// }
 
-// func keliling (p uint8, l uint8) uint8 {
-// 	return 2 * (p + l)
-// }
 
-// func gabungan (p uint8, l uint8) (a uint8, k uint8) {
-// 	a = area(p, l)
-// 	k = keliling(p, l)
-// 	return a, k
-// }
 
-func window (n int) error {
-	if n < 3 {
-		return fmt.Errorf("Harus lebih dari 3")
-	}
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-				if j == 0 || j == n-1 || i == 0 || i == n-1 || j == n/2 || i == n/2{
-					fmt.Printf("*")
-				} else {
-					fmt.Printf(" ")
-				}
-			}
-		fmt.Println()
-	}
-	return nil
-}
-
-func slice (num int8) {
-	a := []int{50, 75, 66, 20, 32, 90}
-	for i, v := range a {
-		if v == 66 {
-			a = append(a[:i+1], append([]int{int(num)}, a[i+1:]...)...)
-			break
-		}
-	}
-	for _, v := range a {
-		fmt.Println(v)
-	}
-}
-
-type Biodata struct {
-	Nama string
-	Foto string
-	Email string
-	Umur uint8
-	NomorTelepon string
-	StatusPernikahan bool
-	RiwayatPendidikan []Pendidikan
-}
-
-type Pendidikan struct {
-	Nama string
-	Jurusan string
-}
