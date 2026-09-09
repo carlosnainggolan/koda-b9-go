@@ -3,39 +3,46 @@ package sales
 import "fmt"
 
 type Checkout interface {
-	Checkout([]int) (string, error)
+	Checkout([]int) error
 }
 
-func Result(checkout Checkout, list []int) (string, error) {
-	return checkout.Checkout(list)
+func Result(checkout Checkout, list []int) error {
+	err := checkout.Checkout(list)
+	if err != nil {
+		fmt.Println("Error", err.Error())
+	}
+	return err
 }
 
 type Bank struct{}
 
 
-func (data Bank) Checkout(items []int) (string, error) {
+func (data *Bank) Checkout(items []int) error {
 	var total uint16 = 0
 	for _, v := range items {
 		total += uint16(v)
 	}
-	return fmt.Sprintf("Total harga %d dan pembayaran dengan Bank", total), nil
+	// return fmt.Sprintf("Total harga %d dan pembayaran dengan Bank", total), nil
+	fmt.Printf("Total harga %d dan pembayaran dengan Bank \n", total)
+	return nil
 }
 
 type Online struct{}
 
-func (data Online) Checkout(items []int) (string, error) {
+func (data *Online) Checkout(items []int) error {
 	var total uint16 = 0
 	for _, v := range items {
 		total += uint16(v)
 	}
-	return fmt.Sprintf("Total harga %d dan pembayaran dengan Online", total), nil
+	fmt.Printf("Total harga %d dan pembayaran dengan Online \n", total)
+	return nil
 }
 
 type Fictional struct{
 	list []uint
 }
 
-func (data Fictional) GetList() string {
+func (data *Fictional) GetList() string {
 	var total uint16 
 	for _, v := range data.list {
 		total += uint16(v)
@@ -44,12 +51,12 @@ func (data Fictional) GetList() string {
 }
 
 
-func (data Fictional) Checkout(items []int) (string, error) {
+func (data *Fictional) Checkout(items []int) error {
 	var addition uint16
 
 	for _,v := range items {
 		if v <= 0 {
-			return "", fmt.Errorf("Error bosku")
+			return fmt.Errorf("Error bosku")
 		}
 	}
 
@@ -57,5 +64,5 @@ func (data Fictional) Checkout(items []int) (string, error) {
 		addition += uint16(v)
 	}
 	data.list = append(data.list, uint(addition))
-	return "", nil
+	return nil
 }

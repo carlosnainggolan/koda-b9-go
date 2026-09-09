@@ -7,10 +7,12 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
 	// "fmt"
 
 	"fmt"
 
+	"github.com/carlosnainggolan/koda-b9-git/internal/concurrency"
 	"github.com/carlosnainggolan/koda-b9-git/internal/model"
 	"github.com/carlosnainggolan/koda-b9-git/internal/sales"
 	"github.com/carlosnainggolan/koda-b9-git/internal/service"
@@ -34,8 +36,12 @@ func main() {
 		fmt.Println("5. Open File Path")
 		fmt.Println("6. Setter Getter")
 		fmt.Println("7. Payment")
+		fmt.Println("8. Concurrency")
+		fmt.Println("9. Morning activities")
+		fmt.Println("10. Channel example")
+		fmt.Println("11. Message")
 		fmt.Println("0. Keluar")
-		fmt.Print("Pilih menu (0-5): ")
+		fmt.Print("Pilih menu (0-9): ")
 
 		if !scanner.Scan() {
 			break
@@ -110,14 +116,26 @@ func main() {
 			fmt.Println(personData.Greet())
 
 		case "7":
-			list := []int{1000, 2000, 3000, 4000}
+			list := []int{1000, 10000, 3000, 4000}
 			bank := sales.Bank{}
 			online := sales.Online{}
 			fiktif := sales.Fictional{}
 
-			fmt.Println(sales.Result(bank, list))
-			fmt.Println(sales.Result(online, list))
-			fmt.Println(sales.Result(fiktif, list))
+			sales.Result(&bank, list)
+			sales.Result(&online, list)
+			sales.Result(&fiktif, list)
+
+		case "8":
+			concurrency.RunConcurrent()
+
+		case "9":
+			concurrency.MorningActivities()
+
+		case "10":
+			concurrency.RunChannel()
+
+		case "11":
+			concurrency.Run()
 			
 
 		case "0":
